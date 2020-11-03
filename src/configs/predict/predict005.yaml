@@ -1,0 +1,57 @@
+experiment:
+  cuda: true
+  name: predict005
+
+
+models:
+  pe_feature_extractor:
+    - configs/mks/mk013.yaml
+  pe_exam_classifier:
+    - configs/seq/seq103.yaml
+    - configs/seq/seq103b.yaml
+    - configs/seq/seq103c.yaml
+  pe_slice_classifier:
+    - configs/seq/seq105.yaml
+    - configs/seq/seq105b.yaml
+    - configs/seq/seq105c.yaml
+    - configs/seq/seq112.yaml
+    - configs/seq/seq112b.yaml
+    - configs/seq/seq112c.yaml
+  heart_slice_classifier:
+    - configs/love/love003.yaml
+  rvlv_exam_classifier:
+    - configs/heart/heart018.yaml
+  rvlv_exam_linear:
+    - configs/prob/prob000.yaml
+
+
+checkpoints:
+  pe_feature_extractor:
+    - ../checkpoints/mk013/fold0/NET2D_004_VM-0.0611.PTH
+  pe_exam_classifier:
+    - ../checkpoints/seq103/fold0/TRANSFORMERCLS_007_VM-0.1625.PTH
+    - ../checkpoints/seq103b/fold0/TRANSFORMERCLS_008_VM-0.1620.PTH
+    - ../checkpoints/seq103c/fold0/TRANSFORMERCLS_009_VM-0.1620.PTH
+  pe_slice_classifier:
+    - ../checkpoints/seq105/fold0/TRANSFORMER_006_VM-0.1860.PTH
+    - ../checkpoints/seq105b/fold0/TRANSFORMER_006_VM-0.1862.PTH
+    - ../checkpoints/seq105c/fold0/TRANSFORMER_006_VM-0.1891.PTH
+    - ../checkpoints/seq112/fold0/TRANSFORMER_009_VM-0.2195.PTH
+    - ../checkpoints/seq112b/fold0/TRANSFORMER_010_VM-0.2204.PTH
+    - ../checkpoints/seq112c/fold0/TRANSFORMER_005_VM-0.2218.PTH
+  heart_slice_classifier:
+    - ../checkpoints/love003/fold0/MSNET2D_001_VM-0.9987.PTH
+  rvlv_exam_classifier:
+    - ../checkpoints/heart018/fold0/NET3D_003_VM-0.4484.PTH
+  rvlv_exam_linear:
+    - ../checkpoints/prob000/fold0/SIMPLELINEAR_049_VM-0.2501.PTH
+
+
+evaluate:
+  batch_size: 1
+
+
+data: 
+  annotations: ../data/test/test_fold0.csv #../data/test/test.csv
+  data_dir: ../data/train/ #../data/test/
+

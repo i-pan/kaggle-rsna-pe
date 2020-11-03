@@ -1,0 +1,44 @@
+experiment:
+  cuda: true
+  name: predict000
+
+
+models:
+  pe_feature_extractor:
+    - configs/mks/mk013.yaml
+  pe_exam_classifier:
+    - configs/seq/seq103.yaml
+  pe_slice_classifier:
+    - configs/seq/seq104.yaml
+  heart_slice_classifier:
+    - configs/love/love003.yaml
+  rvlv_exam_classifier:
+    - configs/heart/heart018.yaml
+    - configs/heart/heart021.yaml
+  rvlv_exam_linear:
+    - configs/prob/prob000.yaml
+
+
+checkpoints:
+  pe_feature_extractor:
+    - ../checkpoints/mk013/fold0/NET2D_004_VM-0.0611.PTH
+  pe_exam_classifier:
+    - ../checkpoints/seq103/fold0/TRANSFORMERCLS_007_VM-0.1625.PTH
+  pe_slice_classifier:
+    - ../checkpoints/seq105/fold0/TRANSFORMER_006_VM-0.1860.PTH
+  heart_slice_classifier:
+    - ../checkpoints/love003/fold0/MSNET2D_001_VM-0.9987.PTH
+  rvlv_exam_classifier:
+    - ../checkpoints/heart018/fold0/NET3D_003_VM-0.4484.PTH
+    - ../checkpoints/heart021/fold0/NET3D_004_VM-0.4854.PTH
+  rvlv_exam_linear:
+    - ../checkpoints/prob000/fold0/SIMPLELINEAR_049_VM-0.2501.PTH
+
+
+evaluate:
+  batch_size: 1
+
+
+data: 
+  annotations: ../data/test/test_fold0.csv
+  data_dir: ../data/train/

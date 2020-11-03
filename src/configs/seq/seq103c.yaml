@@ -1,0 +1,75 @@
+experiment:
+  cuda: true
+  name: seq103c
+  seed: 81
+  save_logs: ../logs/
+  save_checkpoints: ../checkpoints/
+
+
+data: 
+  annotations: ../data/train/train_5fold.csv
+  data_dir: ../data/train-features/mk013/fold0
+  outer_fold: 0
+  targets: 
+    - negative_exam_for_pe
+    - indeterminate 
+    - chronic_pe
+    - acute_and_chronic_pe
+    - central_pe
+    - leftsided_pe
+    - rightsided_pe
+  dataset:
+    name: FeatureDataset
+    params:
+      seq_len: 512
+      resample: false
+      exam_level_label: true
+
+
+model:
+  name: TransformerCls
+  params:
+    num_classes: 7
+    n_layers: 2
+
+
+loss:
+  name: PEStudyLogLoss
+  params:
+
+
+optimizer:
+  name: RAdam
+  params:
+    lr: 1.0e-3
+    weight_decay: 5.0e-4
+
+
+scheduler: 
+  name: CosineAnnealingLR
+  params:
+    final_lr: 1.0e-8
+
+
+train:
+  batch_size: 32
+  name: Trainer
+  params:
+    num_epochs: 10
+    steps_per_epoch: 0
+    validate_interval: 1
+    gradient_accumulation: 1
+    amp: true
+
+
+evaluate: 
+  batch_size: 1
+  name: Evaluator
+  params:
+    metrics: [loss, multi_auc]
+    valid_metric: loss
+    mode: min
+    improve_thresh: 1.0e-4
+    save_best: true
+
+

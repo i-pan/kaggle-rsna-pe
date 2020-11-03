@@ -1,0 +1,102 @@
+experiment:
+  cuda: true
+  name: mk008
+  seed: 88
+  save_logs: ../logs/
+  save_checkpoints: ../checkpoints/
+
+
+data: 
+  annotations: ../data/train/train_kfold.csv
+  data_dir: ../data/train/
+  inner_fold: 0
+  outer_fold: 0
+  stack: true
+  stack_labels: true
+  targets: pe_present_on_image
+  dataset:
+    name: DICOMDataset
+    params:
+      window: [50, 350]
+      flip: true
+      random_hu: 5
+      verbose: true
+
+
+transform:
+  resize:
+    name: resize_alt
+    params:
+      imsize: [512, 512]
+  augment:
+    name: RandAugment
+    params:
+      n: 3
+      m: 12.0
+  crop:
+    name: crop
+    params:
+      imsize: [448, 448]
+  preprocess:
+    name: Preprocessor
+    params:
+      image_range: [0, 255]
+      input_range: [0, 1]
+      mean: [0.5, 0.5, 0.5]
+      sdev: [0.5, 0.5, 0.5]
+
+
+model:
+  name: MSNet2D
+  params:
+    backbone: tf_efficientnet_b4
+    backbone_params:
+      stride: [1,2,2,2,1,1,1]
+    pretrained: true
+    num_classes: 3
+    dropout: 0.2
+    feat_reduce: 512
+    multisample_dropout: true
+    pool: avg 
+
+
+loss:
+  name: MultiSliceBCE
+  params:
+
+
+optimizer:
+  name: RAdam
+  params:
+    lr: 3.0e-4
+    weight_decay: 5.0e-4
+
+
+scheduler: 
+  name: CosineAnnealingLR
+  params:
+    final_lr: 1.0e-8
+
+
+train:
+  batch_size: 32
+  name: Trainer
+  params:
+    num_epochs: 5
+    steps_per_epoch: 2500 # full epoch = 11292 steps @ BS32
+    validate_interval: 1
+    gradient_accumulation: 1
+    amp: true
+    verbosity: 100
+
+
+evaluate: 
+  name: Evaluator
+  params:
+    metrics: [loss, auc]
+    valid_metric: loss
+    mode: min
+    improve_thresh: 1.0e-4
+    save_best: true
+
+

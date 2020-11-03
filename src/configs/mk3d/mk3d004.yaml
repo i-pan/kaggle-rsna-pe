@@ -1,0 +1,109 @@
+experiment:
+  cuda: true
+  name: mk3d004
+  seed: 88
+  save_logs: ../logs/
+  save_checkpoints: ../checkpoints/
+
+
+data: 
+  annotations: ../data/train/train_5fold_with_probas.csv
+  data_dir: ../data/train/
+  outer_fold: 0
+  targets:
+    - negative_exam_for_pe
+    - indeterminate 
+    - chronic_pe
+    - acute_and_chronic_pe
+    - central_pe
+    - leftsided_pe
+    - rightsided_pe
+  top_pe_slices: 0.3
+  dataset:
+    name: SeriesDataset
+    params:
+      window: [100, 700]
+      flip: false
+      random_hu: 5
+      verbose: false
+      stack_3ch: true
+      repeat_3ch: false
+      bzchw: true
+      num_slices: 32
+
+
+transform:
+  resize:
+    name: resize_alt
+    params:
+      imsize: [512, 512]
+  augment:
+    name: rand_albumentations
+    params:
+      n: 3
+      p: 0.9
+  crop:
+    name: crop
+    params:
+      imsize: [448, 448]
+  preprocess:
+    name: Preprocessor
+    params:
+      image_range: [0, 255]
+      input_range: [0, 1]
+      mean: [0.5, 0.5, 0.5]
+      sdev: [0.5, 0.5, 0.5]
+
+
+model:
+  name: TDCNN
+  params:
+    backbone: resnest50
+    pretrained: true
+    num_classes: 7
+    pool: avg
+    load_backbone: ../checkpoints/mk012/fold0/MSNET2D_004_VM-0.0844.PTH
+    load_transformer: ../checkpoints/seq000/fold0/TRANSFORMER_005_VM-0.0744.PTH
+    bn_eval: true
+
+
+loss:
+  name: PEStudyLogLoss
+  params:
+
+
+optimizer:
+  name: AdamW
+  params:
+    lr: 1.0e-4
+    weight_decay: 5.0e-4
+
+
+scheduler: 
+  name: CosineAnnealingLR
+  params:
+    final_lr: 1.0e-8
+
+
+train:
+  batch_size: 2
+  name: Trainer
+  params:
+    num_epochs: 10
+    steps_per_epoch: 0
+    validate_interval: 1
+    gradient_accumulation: 1
+    amp: true
+    verbosity: 0
+
+
+evaluate: 
+  name: Evaluator
+  params:
+    metrics: [loss, multi_auc]
+    valid_metric: loss
+    mode: min
+    improve_thresh: 1.0e-4
+    save_best: true
+
+

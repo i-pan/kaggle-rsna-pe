@@ -1,0 +1,101 @@
+experiment:
+  cuda: true
+  name: mk015
+  seed: 88
+  save_logs: ../logs/
+  save_checkpoints: ../checkpoints/
+
+
+data: 
+  annotations: ../data/train/train_5fold.csv
+  data_dir: ../data/train/
+  outer_fold: 0
+  targets: 
+    - pe_present_on_image
+    - indeterminate 
+    - chronic_pe
+    - acute_and_chronic_pe
+    - central_pe
+    - leftsided_pe
+    - rightsided_pe
+  dataset:
+    name: DICOMDataset
+    params:
+      window: null
+      flip: false
+      random_hu: 5
+      verbose: true
+
+
+transform:
+  resize:
+    name: resize_alt
+    params:
+      imsize: [512, 512]
+  augment:
+    name: rand_spatialaugs
+    params:
+      n: 3
+      p: 0.9
+  crop:
+    name: crop
+    params:
+      imsize: [448, 448]
+
+
+model:
+  name: WSONet2D
+  params:
+    backbone: resnest50
+    pretrained: true
+    num_classes: 7
+    dropout: 0.2
+    feat_reduce: 512
+    multisample_dropout: true
+    pool: gem 
+    wso_params:
+      nch: 3
+      wl: [ 50, 100, 100]
+      ww: [350, 700, 700]
+
+
+loss:
+  name: BCEWithLogitsLoss
+  params:
+
+
+optimizer:
+  name: AdamW
+  params:
+    lr: 3.0e-4
+    weight_decay: 5.0e-4
+
+
+scheduler: 
+  name: CosineAnnealingLR
+  params:
+    final_lr: 1.0e-8
+
+
+train:
+  batch_size: 32
+  name: Trainer
+  params:
+    num_epochs: 5
+    steps_per_epoch: 2500 # full epoch = 11292 steps @ BS32
+    validate_interval: 5
+    gradient_accumulation: 1
+    amp: true
+    verbosity: 100
+
+
+evaluate: 
+  name: Evaluator
+  params:
+    metrics: [loss, multi_auc]
+    valid_metric: loss
+    mode: min
+    improve_thresh: 1.0e-4
+    save_best: true
+
+

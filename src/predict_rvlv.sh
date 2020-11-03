@@ -1,0 +1,6 @@
+export OMP_NUM_THREADS=2
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/heart/heart018.yaml predict_rvlv --dist --dist-val --num-workers 2 --kfold 0 --save-probas-dir ../data/train-rvlv-probas/fold0 --checkpoint ../checkpoints/heart018/fold0/NET3D_003_VM-0.4484.PTH
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/heart/heart018.yaml predict_rvlv --dist --dist-val --num-workers 2 --kfold 1 --save-probas-dir ../data/train-rvlv-probas/fold1 --checkpoint ../checkpoints/heart018/fold1/NET3D_004_VM-0.4444.PTH
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/heart/heart018.yaml predict_rvlv --dist --dist-val --num-workers 2 --kfold 2 --save-probas-dir ../data/train-rvlv-probas/fold2 --checkpoint ../checkpoints/heart018/fold2/NET3D_004_VM-0.4695.PTH
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/heart/heart018.yaml predict_rvlv --dist --dist-val --num-workers 2 --kfold 3 --save-probas-dir ../data/train-rvlv-probas/fold3 --checkpoint ../checkpoints/heart018/fold3/NET3D_004_VM-0.4745.PTH
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/heart/heart018.yaml predict_rvlv --dist --dist-val --num-workers 2 --kfold 4 --save-probas-dir ../data/train-rvlv-probas/fold4 --checkpoint ../checkpoints/heart018/fold4/NET3D_004_VM-0.4837.PTH

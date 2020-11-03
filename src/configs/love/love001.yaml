@@ -1,0 +1,93 @@
+experiment:
+  cuda: true
+  name: love001
+  seed: 88
+  save_logs: ../logs/
+  save_checkpoints: ../checkpoints/
+
+
+data: 
+  annotations: ../data/train/train_heart_slices.csv
+  data_dir: ../data/train/
+  outer_fold: 0
+  targets: heart_present
+  dataset:
+    name: DICOMDataset
+    params:
+      window: null
+      flip: true
+      random_hu: 5
+      verbose: true
+
+
+transform:
+  resize:
+    name: resize_alt
+    params:
+      imsize: [256, 256]
+  augment:
+    name: rand_spatialaugs
+    params:
+      n: 3
+      p: 0.9
+  crop:
+    name: crop
+    params:
+      imsize: [224, 224]
+
+
+model:
+  name: WSONet2D
+  params:
+    backbone: efficientnet_b1_pruned
+    pretrained: true
+    num_classes: 1
+    dropout: 0.2
+    multisample_dropout: true
+    pool: avg 
+    wso_params:
+      nch: 3
+      wl: [50,  50,  50]
+      ww: [350, 350, 350]
+
+
+loss:
+  name: BCEWithLogitsLoss
+  params:
+
+
+optimizer:
+  name: AdamW
+  params:
+    lr: 3.0e-4
+    weight_decay: 5.0e-4
+
+
+scheduler: 
+  name: CosineAnnealingLR
+  params:
+    final_lr: 1.0e-8
+
+
+train:
+  batch_size: 64
+  name: Trainer
+  params:
+    num_epochs: 5
+    steps_per_epoch: 0 # full epoch = 11292 steps @ BS32
+    validate_interval: 1
+    gradient_accumulation: 1
+    amp: true
+    verbosity: 100
+
+
+evaluate: 
+  name: Evaluator
+  params:
+    metrics: [loss, auc]
+    valid_metric: auc
+    mode: max
+    improve_thresh: 1.0e-4
+    save_best: true
+
+

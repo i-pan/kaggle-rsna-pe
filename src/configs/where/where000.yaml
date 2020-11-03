@@ -1,0 +1,102 @@
+experiment:
+  cuda: true
+  name: where000
+  seed: 88
+  save_logs: ../logs/
+  save_checkpoints: ../checkpoints/
+
+
+data: 
+  unilateral_pe: true
+  annotations: ../data/train/train_kfold.csv
+  data_dir: ../data/train/
+  inner_fold: 0
+  outer_fold: 0
+  stack: true
+  targets:
+  dataset:
+    name: DICOMDataset
+    params:
+      window: [50, 350]
+      flip: false
+      random_hu: 5
+      verbose: true
+
+
+transform:
+  resize:
+    name: resize
+    params:
+      imsize: [512, 512]
+  augment:
+    name: RandAugment
+    params:
+      n: 3
+      m: 12.0
+  crop:
+    name: crop
+    params:
+      imsize: [448, 448]
+  preprocess:
+    name: Preprocessor
+    params:
+      image_range: [0, 255]
+      input_range: [0, 1]
+      mean: [0.5, 0.5, 0.5]
+      sdev: [0.5, 0.5, 0.5]
+
+
+model:
+  name: Net2D
+  params:
+    backbone: efficientnet_b0
+    pretrained: true
+    num_classes: 4
+    dropout: 0.5
+    multisample_dropout: true
+    pool: avg 
+
+
+loss:
+  name: CrossEntropyLoss
+  params:
+
+
+optimizer:
+  name: AdamW
+  params:
+    lr: 4.0e-5
+    weight_decay: 5.0e-4
+
+
+scheduler: 
+  name: CustomOneCycleLR
+  params:
+    max_lr: 1.0e-3
+    final_lr: 1.0e-8
+    pct_start: 0.1
+
+
+train:
+  batch_size: 128
+  name: Trainer
+  params:
+    num_epochs: 12
+    steps_per_epoch: 0
+    validate_interval: 3
+    gradient_accumulation: 1
+    amp: true
+    verbosity: 10
+
+
+evaluate: 
+  name: Evaluator
+  params:
+    metrics: [pos_accuracy, accuracy]
+    valid_metric: pos_accuracy
+    mode: max
+    improve_thresh: 1.0e-4
+    save_best: true
+    act_fn: softmax
+
+

@@ -1,0 +1,6 @@
+export OMP_NUM_THREADS=2
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/seq/seq105.yaml predict_features --dist --dist-val --num-workers 2 --kfold 0 --save-probas-dir ../data/train-pe-probas/fold0 --checkpoint ../checkpoints/seq105/fold0/TRANSFORMER_006_VM-0.1860.PTH
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/seq/seq105.yaml predict_features --dist --dist-val --num-workers 2 --kfold 1 --save-probas-dir ../data/train-pe-probas/fold1 --checkpoint ../checkpoints/seq105/fold1/TRANSFORMER_005_VM-0.1831.PTH
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/seq/seq105.yaml predict_features --dist --dist-val --num-workers 2 --kfold 2 --save-probas-dir ../data/train-pe-probas/fold2 --checkpoint ../checkpoints/seq105/fold2/TRANSFORMER_006_VM-0.1924.PTH
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/seq/seq105.yaml predict_features --dist --dist-val --num-workers 2 --kfold 3 --save-probas-dir ../data/train-pe-probas/fold3 --checkpoint ../checkpoints/seq105/fold3/TRANSFORMER_006_VM-0.1930.PTH
+pyt -m torch.distributed.launch --nproc_per_node=4 run.py configs/seq/seq105.yaml predict_features --dist --dist-val --num-workers 2 --kfold 4 --save-probas-dir ../data/train-pe-probas/fold4 --checkpoint ../checkpoints/seq105/fold4/TRANSFORMER_005_VM-0.1914.PTH

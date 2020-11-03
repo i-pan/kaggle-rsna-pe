@@ -1,0 +1,5 @@
+pyt run.py configs/mks/mk012.yaml extract --device_id 0 --num-workers 2 --save-features-dir ../data/train-features/mk012/fold0 --checkpoint ../checkpoints/mk012/fold0/MSNET2D_004_VM-0.0844.PTH
+pyt run.py configs/mks/mk012.yaml extract --device_id 0 --num-workers 2 --save-features-dir ../data/train-features/mk012/fold1 --checkpoint ../checkpoints/mk012/fold1/MSNET2D_004_VM-0.0808.PTH
+pyt run.py configs/mks/mk012.yaml extract --device_id 0 --num-workers 2 --save-features-dir ../data/train-features/mk012/fold2 --checkpoint ../checkpoints/mk012/fold2/MSNET2D_004_VM-0.0863.PTH
+pyt run.py configs/mks/mk012.yaml extract --device_id 0 --num-workers 2 --save-features-dir ../data/train-features/mk012/fold3 --checkpoint ../checkpoints/mk012/fold3/MSNET2D_004_VM-0.0880.PTH
+pyt run.py configs/mks/mk012.yaml extract --device_id 0 --num-workers 2 --save-features-dir ../data/train-features/mk012/fold4 --checkpoint ../checkpoints/mk012/fold4/MSNET2D_004_VM-0.0887.PTH

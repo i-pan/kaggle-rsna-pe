@@ -1,0 +1,67 @@
+experiment:
+  cuda: true
+  name: seq123
+  seed: 88
+  save_logs: ../logs/
+  save_checkpoints: ../checkpoints/
+
+
+data: 
+  annotations: ../data/train/train_5fold.csv
+  data_dir: ../data/train-features/mk022/fold0
+  outer_fold: 0
+  positives_only: true
+  targets: pe_present_on_image
+  dataset:
+    name: FeatureDataset
+    params:
+      seq_len: 512
+
+
+model:
+  name: Transformer
+  params:
+    num_classes: 1
+
+
+loss:
+  name: MaskedBCEWithLogitsLoss
+  params:
+    weighted: true
+
+
+optimizer:
+  name: RAdam
+  params:
+    lr: 1.0e-3
+    weight_decay: 5.0e-4
+
+
+scheduler: 
+  name: CosineAnnealingLR
+  params:
+    final_lr: 1.0e-8
+
+
+train:
+  batch_size: 32
+  name: Trainer
+  params:
+    num_epochs: 12
+    steps_per_epoch: 0
+    validate_interval: 1
+    gradient_accumulation: 1
+    amp: true
+
+
+evaluate: 
+  batch_size: 1
+  name: Evaluator
+  params:
+    metrics: [loss, auc]
+    valid_metric: loss
+    mode: min
+    improve_thresh: 1.0e-4
+    save_best: true
+
+

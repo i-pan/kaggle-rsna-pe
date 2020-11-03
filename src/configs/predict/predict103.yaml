@@ -1,0 +1,104 @@
+experiment:
+  cuda: true
+  name: predict103
+
+
+models:
+  pe_feature_extractor:
+    - /kaggle/input/rsna-str-pe-src/configs/mks/mk013.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/mks/mk013.yaml
+  pe_exam_classifier:
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq103.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq103b.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq103c.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq103.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq103b.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq103c.yaml
+  pe_slice_classifier:
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq105.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq105b.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq105c.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq112.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq112b.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq112c.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq105.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq105b.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq105c.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq112.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq112b.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/seq/seq112c.yaml
+  pe_exam_tdcnn:
+    - /kaggle/input/rsna-str-pe-src/configs/mk3d/mk3d008.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/mk3d/mk3d008.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/mk3d/mk3d008.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/mk3d/mk3d008.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/mk3d/mk3d008.yaml
+  heart_slice_classifier:
+    - /kaggle/input/rsna-str-pe-src/configs/love/love003.yaml
+  rvlv_exam_classifier:
+    - /kaggle/input/rsna-str-pe-src/configs/heart/heart018.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/heart/heart018.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/heart/heart018.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/heart/heart018.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/heart/heart018.yaml
+  rvlv_exam_linear:
+    - /kaggle/input/rsna-str-pe-src/configs/prob/prob000.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/prob/prob000.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/prob/prob000.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/prob/prob000.yaml
+    - /kaggle/input/rsna-str-pe-src/configs/prob/prob000.yaml
+
+
+checkpoints:
+  pe_feature_extractor:
+    - /kaggle/input/rsna-str-pe-checkpoints/mk013/fold0/NET2D_004_VM-0.0611.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/mk013/fold1/NET2D_004_VM-0.0595.PTH
+  pe_exam_classifier:
+    - /kaggle/input/rsna-str-pe-checkpoints/seq103/fold0/TRANSFORMERCLS_007_VM-0.1625.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq103b/fold0/TRANSFORMERCLS_008_VM-0.1620.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq103c/fold0/TRANSFORMERCLS_009_VM-0.1620.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq103/fold1/TRANSFORMERCLS_009_VM-0.1530.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq103b/fold1/TRANSFORMERCLS_009_VM-0.1522.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq103c/fold1/TRANSFORMERCLS_009_VM-0.1537.PTH
+  pe_slice_classifier:
+    - /kaggle/input/rsna-str-pe-checkpoints/seq105/fold0/TRANSFORMER_006_VM-0.1860.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq105b/fold0/TRANSFORMER_006_VM-0.1862.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq105c/fold0/TRANSFORMER_006_VM-0.1891.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq112/fold0/TRANSFORMER_009_VM-0.2195.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq112b/fold0/TRANSFORMER_010_VM-0.2204.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq112c/fold0/TRANSFORMER_005_VM-0.2218.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq105/fold1/TRANSFORMER_005_VM-0.1831.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq105b/fold1/TRANSFORMER_006_VM-0.1848.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq105c/fold1/TRANSFORMER_006_VM-0.1847.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq112/fold1/TRANSFORMER_009_VM-0.2067.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq112b/fold1/TRANSFORMER_011_VM-0.2063.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/seq112c/fold1/TRANSFORMER_010_VM-0.2104.PTH
+  pe_exam_tdcnn:
+    - /kaggle/input/rsna-str-pe-checkpoints/mk3d008/fold0/TDCNN_009_VM-0.1629.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/mk3d008/fold1/TDCNN_009_VM-0.1588.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/mk3d008/fold2/TDCNN_009_VM-0.1641.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/mk3d008/fold3/TDCNN_007_VM-0.1706.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/mk3d008/fold4/TDCNN_009_VM-0.1564.PTH
+  heart_slice_classifier:
+    - /kaggle/input/rsna-str-pe-checkpoints/love003/fold0/MSNET2D_001_VM-0.9987.PTH
+  rvlv_exam_classifier:
+    - /kaggle/input/rsna-str-pe-checkpoints/heart018/fold0/NET3D_003_VM-0.4484.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/heart018/fold1/NET3D_004_VM-0.4444.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/heart018/fold2/NET3D_004_VM-0.4695.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/heart018/fold3/NET3D_004_VM-0.4745.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/heart018/fold4/NET3D_004_VM-0.4837.PTH
+  rvlv_exam_linear:
+    - /kaggle/input/rsna-str-pe-checkpoints/prob000/fold0/SIMPLELINEAR_049_VM-0.2501.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/prob000/fold1/SIMPLELINEAR_049_VM-0.2454.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/prob000/fold2/SIMPLELINEAR_049_VM-0.2682.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/prob000/fold3/SIMPLELINEAR_049_VM-0.2635.PTH
+    - /kaggle/input/rsna-str-pe-checkpoints/prob000/fold4/SIMPLELINEAR_049_VM-0.2683.PTH
+
+
+evaluate:
+  batch_size: 1
+
+
+data: 
+  annotations: /kaggle/input/rsna-str-pulmonary-embolism-detection/test.csv
+  data_dir: /kaggle/input/rsna-str-pulmonary-embolism-detection/test/

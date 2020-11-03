@@ -1,0 +1,70 @@
+experiment:
+  cuda: true
+  name: prob006
+  seed: 88
+  save_logs: ../logs/
+  save_checkpoints: ../checkpoints/
+
+
+data: 
+  annotations: ../data/train/train_5fold_probdataset_v2.csv
+  data_dir: ../data/train-features/heart018/fold0
+  outer_fold: 0
+  targets:
+    - rv_lv_ratio_gte_1
+    - rv_lv_ratio_lt_1
+  dataset:
+    name: RVLVFeatures
+    params:
+
+
+model:
+  name: HeartFeature
+  params:
+    num_features: 2048
+    embedding_dims: [7,16]
+    num_classes: 2
+    dropout: 0.2
+    n_layers: 2
+
+
+loss:
+  name: RVLVLogLoss
+  params:
+
+
+optimizer:
+  name: AdamW
+  params:
+    lr: 1.0e-2
+    weight_decay: 5.0e-4
+
+
+scheduler: 
+  name: CosineAnnealingLR
+  params:
+    final_lr: 1.0e-2
+
+
+train:
+  batch_size: 128
+  name: Trainer
+  params:
+    num_epochs: 50
+    steps_per_epoch: 0
+    validate_interval: 5
+    gradient_accumulation: 1
+    amp: true
+    verbosity: 20
+
+
+evaluate: 
+  name: Evaluator
+  params:
+    metrics: [loss, multi_auc, multi_loss]
+    valid_metric: loss
+    mode: min
+    improve_thresh: 1.0e-4
+    save_best: true
+
+
