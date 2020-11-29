@@ -43,10 +43,8 @@ jpegio==0.2.1
 jsonpatch==1.25
 jsonpointer==2.0
 kaggle==1.5.6
-Keras==2.4.3
 kiwisolver==1.1.0
 llvmlite==0.32.0
--e git+https://github.com/JoHof/lungmask.git@c54c28c7e6e1fe224d41ca374623b39a667c3137#egg=lungmask
 lxml==4.5.0
 Markdown==3.2.2
 matplotlib==3.1.3
@@ -56,8 +54,6 @@ mkl-random==1.1.0
 mkl-service==2.3.0
 mmcv==1.0.4
 mmcv-full==1.0.4
-# Editable install with no version control (mmdet==1.1.0+1b299b5)
--e /home/ianpan/anaconda3/envs/pytorch_p37_nt/lib/python3.7/site-packages/mmdet-1.1.0+1b299b5-py3.7.egg
 munch==2.5.0
 networkx==2.4
 nibabel==3.1.0
